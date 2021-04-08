@@ -1,3 +1,3 @@
 # CRUD react + firebase
 
-[Ver Demo](https://github.com/facebook/create-react-app).
+[Ver Demo](https://react-firebase-crud-prueba.netlify.app/).
