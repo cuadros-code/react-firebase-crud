@@ -81,6 +81,9 @@ const Register = () => {
         >
           Sign Up
         </ButtonForm>
+
+        <br />
+
         <ButtonFormGoogle
           variant="contained"
           color="inherit"

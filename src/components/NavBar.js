@@ -4,7 +4,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 import styled from 'styled-components'
 import { auth } from '../firebase-config';
@@ -27,6 +27,11 @@ const NavBar = () => {
   const classes = useStyles();
   const [user] = useAuthState(auth);
 
+
+  const handleLogOut = () => {
+    auth.signOut()
+  }
+
   return (
     <div className={classes.root}>
       <AppBar color="secondary" position="static">
@@ -37,7 +42,7 @@ const NavBar = () => {
           {
             user
               ?
-              <Button onClick={() => auth.signOut()} color="inherit">Log Out</Button>
+              <Button onClick={handleLogOut} color="inherit">Log Out</Button>
               :
               <>
                 <LinkNavBar to="/auth/login">

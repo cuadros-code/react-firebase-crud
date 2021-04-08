@@ -17,6 +17,7 @@ import Login from '../pages/Login'
 import Register from '../pages/Register'
 import Dashboard from '../pages/Dashboard'
 import { auth } from '../firebase-config'
+import Footer from "../components/Footer";
 
 export const AppRouter = () => {
 
@@ -52,6 +53,7 @@ export const AppRouter = () => {
       </Switch>
 
       <Redirect to="/profile/dashboard" />
+
     </Router>
   )
 }
@@ -75,6 +77,7 @@ const PublicRouterContainer = () => {
         <Route exact path="/auth/register" component={Register} />
         <Redirect to="/auth/login" />
       </Switch>
+      <Footer />
     </div>
   )
 }

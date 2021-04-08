@@ -18,6 +18,7 @@ export const useForm = (initialState = {}) => {
   return {
     formValue,
     onChange,
-    reset
+    reset,
+    setFormValue
   }
 }

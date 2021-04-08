@@ -77,6 +77,7 @@ const Login = () => {
         >
           Log In
         </ButtonForm>
+        <br />
         <ButtonFormGoogle
           variant="contained"
           color="inherit"

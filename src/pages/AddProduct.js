@@ -1,15 +1,20 @@
 import { Button } from '@material-ui/core'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import TextField from '@material-ui/core/TextField'
 import { useForm } from '../hooks/useForm'
 import Alert from '../components/Alert'
 import { useCollection } from 'react-firebase-hooks/firestore';
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { auth, db } from '../firebase-config'
 
 
-const AddProduct = () => {
+const AddProduct = ({ openModal, data }) => {
 
-  const { formValue, onChange } = useForm({
+  const [messageAlert, setMessageAlert] = useState('')
+  const [user] = useAuthState(auth)
+
+  const { formValue, onChange, setFormValue } = useForm({
     name: '',
     description: '',
     price: '',
@@ -18,8 +23,30 @@ const AddProduct = () => {
 
   const { name, description, price, stock } = formValue
 
+  useEffect(() => {
+    if (data) {
+      setFormValue(data)
+    }
+  }, [data])
+
   const onSubmit = (e) => {
     e.preventDefault()
+    if (name === '' || description === '' || price === '' || stock === '') {
+      return setMessageAlert('Insert all fields')
+    }
+    formValue.uid = user.uid
+    if (data) {
+      db
+        .collection('products')
+        .doc(data.id)
+        .set(formValue)
+    } else {
+      db
+        .collection('products')
+        .add(formValue)
+    }
+
+    openModal(false)
   }
 
   return (
@@ -27,11 +54,23 @@ const AddProduct = () => {
       <FormContainer
         onSubmit={onSubmit}
       >
-        <Alert
-          message="Insert all fields"
-          type="err"
-        />
-        <h2>Add product</h2>
+        {
+          messageAlert !== ''
+          &&
+          <>
+            <Alert
+              message={messageAlert}
+              type="err"
+            />
+          </>
+        }
+        {
+          data
+            ?
+            <h2>Edit product</h2>
+            :
+            <h2>Add product</h2>
+        }
         <InputText
           id="outlined-basic"
           label="Name"
@@ -67,13 +106,26 @@ const AddProduct = () => {
           variant="outlined"
         />
 
-        <Button
-          variant="contained"
-          color="secondary"
-          type="submit"
-        >
-          Save
-      </Button>
+        {
+          data
+            ?
+            <Button
+              variant="contained"
+              color="primary"
+              type="submit"
+            >
+              Edit
+            </Button>
+            :
+            <Button
+              variant="contained"
+              color="secondary"
+              type="submit"
+            >
+              Save
+            </Button>
+        }
+
       </FormContainer>
 
     </Container >
