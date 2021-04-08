@@ -8,14 +8,12 @@ import { useForm } from '../hooks/useForm'
 import { auth, FacebookProvider, GoogleProvider } from '../firebase-config'
 import AlertContainer from '../components/Alert'
 
-
 const Login = () => {
 
   const [messageAlert, setMessageAlert] = useState('')
-
-
   const [
     signInWithEmailAndPassword,
+    user,
     loading,
     error,
   ] = useSignInWithEmailAndPassword(auth);
@@ -36,12 +34,11 @@ const Login = () => {
   const handleGoogleAuth = () => {
     auth.signInWithPopup(GoogleProvider)
       .catch(() => setMessageAlert('error when authenticating with google'))
-
   }
+
   const handleFacebookAuth = () => {
     auth.signInWithPopup(FacebookProvider)
       .catch(() => setMessageAlert('error when authenticating with facebook'))
-
   }
 
   return (
@@ -51,7 +48,7 @@ const Login = () => {
           (error?.message || messageAlert !== '')
           &&
           <AlertContainer
-            message={error.message ? error?.message : messageAlert}
+            message={error?.message ? error?.message : messageAlert}
             type="err"
           />
         }

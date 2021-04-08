@@ -36,7 +36,7 @@ export const AppRouter = () => {
       <NavBar />
       <Switch>
 
-        {/* <Route exact path="/profile" component={Login} /> */}
+        {/* <Route path="/auth" component={Login} /> */}
 
         <PublicRouter
           isAuthenticated={isAuth}
@@ -50,6 +50,8 @@ export const AppRouter = () => {
           component={PrivateRouterContainer}
         />
       </Switch>
+
+      <Redirect to="/profile/dashboard" />
     </Router>
   )
 }

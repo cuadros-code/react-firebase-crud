@@ -15,4 +15,5 @@ const AlertContainer = styled.div`
   background-color: ${props => props.type === 'ok' ? '#D1E7DD' : '#F8D7DA'};
   text-align: center;
   border-radius:10px;
+  padding: 0 5px 0 5px;
 `

@@ -14,6 +14,7 @@ const Register = () => {
 
   const [
     createUserWithEmailAndPassword,
+    user,
     loading,
     error,
   ] = useCreateUserWithEmailAndPassword(auth)
@@ -24,6 +25,8 @@ const Register = () => {
   })
 
   const { email, password } = formValue
+
+  console.log(error);
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -49,7 +52,7 @@ const Register = () => {
           (error?.message || messageAlert !== '')
           &&
           <AlertContainer
-            message={error.message ? error?.message : messageAlert}
+            message={error?.message ? error?.message : messageAlert}
             type="err"
           />
         }
